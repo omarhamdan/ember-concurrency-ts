@@ -3,7 +3,7 @@ import {
   TaskInstance,
   TaskFunction as GenericTaskFunction,
   TaskFunctionArgs as Args,
-  TaskForTaskFunction as TaskFor,
+  TaskFunctionReturnType as Return,
   TaskInstanceForTaskFunction as InstanceFor,
   EncapsulatedTaskDescriptor as GenericDescriptor,
   EncapsulatedTaskDescriptorArgs as DescriptorArgs,
@@ -13,6 +13,11 @@ import {
 
 type TaskFunction = GenericTaskFunction<any, any[]>;
 type Descriptor = GenericDescriptor<any, any[]>;
+
+interface TaskFor<T extends TaskFunction> extends Task<Return<T>, Args<T>> {
+  linked(): Descriptor,
+  unlinked(): Descriptor
+}
 
 /**
  * No-op typecast function that turns what TypeScript believes to be a
